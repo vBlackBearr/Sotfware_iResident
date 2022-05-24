@@ -5,17 +5,27 @@
  */
 package com.GUI;
 
+import com.conexion.Conexion;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author serch
  */
 public class AutosR extends javax.swing.JFrame {
 
+    Conexion conn;
+    
+    ResultSet TableContent;
+    
     /**
      * Creates new form Residentes
      */
     public AutosR() {
         initComponents();
+        conn = new Conexion();
     }
 
     /**
@@ -170,4 +180,23 @@ public class AutosR extends javax.swing.JFrame {
     private javax.swing.JButton eliminar;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    public void refresh_tabla() throws SQLException {
+        TableContent = conn.querie("select * from  order by no");
+        DefaultTableModel modelo_tabla = null;
+        modelo_tabla = new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Nonbre del dueño", "Matricula del auto", "Seccion a la que pertenece", "Marca del auto"
+                }
+        );
+        while (TableContent.next()) {
+            String[] row = {TableContent.getString(1), TableContent.getString(2), TableContent.getString(3),
+                TableContent.getString(4)};
+            modelo_tabla.addRow(row);
+        }
+        autos.setModel(modelo_tabla);
+        System.out.println("Docentes Table Refresh Done");
+    }
+
 }
