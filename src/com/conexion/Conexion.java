@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
  */
 public class Conexion {
 
-    String bd = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
-    String usuario = "root";
-    String contrasenia = "";
+//    String bd = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+//    String usuario = "root";
+//    String contrasenia = "";
     String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
 
     Connection con;
@@ -30,7 +30,7 @@ public class Conexion {
     String db = "";
     String user = "root";
     String pass = "";
-    String url = "jdbc:mysql://" + host + ":" + port + "/" + bd + "?user=root&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+    String url = "jdbc:mysql://" + host + ":" + port + "/" + db + "?user=root&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
 
     public Connection conectar() throws SQLException {
         return DriverManager.getConnection(url);
