@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -122,6 +123,7 @@ public class Acceso extends javax.swing.JFrame {
         ResultSet pass = conn.querie("select password from usuarios where usuario = '" + txtUsuario.getText() + "'");
         try {
             if(pass.next() && pass.getString(1).equals(txtContraseña.getText())){
+                JOptionPane.showMessageDialog(null, "ACCESO CONCEDIDO", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Acceso.class.getName()).log(Level.SEVERE, null, ex);
