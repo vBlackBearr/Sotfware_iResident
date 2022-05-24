@@ -27,13 +27,11 @@ public class Conexion {
 
     String host = "localhost";
     String port = "3306";
-    String db = "proyecto_gestor_itt";
-    String table = "";
+    String db = "";
     String user = "root";
     String pass = "";
-    String url = "jdbc:mysql://localhost:3306/<bdname>?user=root&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+    String url = "jdbc:mysql://" + host + ":" + port + "/" + bd + "?user=root&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
 
-    
     public Connection conectar() throws SQLException {
         return DriverManager.getConnection(url);
     }
@@ -41,14 +39,19 @@ public class Conexion {
     public Conexion() {
         Conectar();
     }
-    
+
+    /**/
+    /**
+     *
+     * @param URL
+     */
     public Conexion(String URL) {
-       
+
         this.url = URL;
         Conectar();
     }
-    
-    public void Conectar(){
+
+    public void Conectar() {
         try {
             Class.forName(DATABASE_DRIVER);
             System.out.println("Encontro Driver");
@@ -85,11 +88,11 @@ public class Conexion {
     }
 
     public int DML(String querie) throws SQLException {
-        int rs=0;
+        int rs = 0;
 
-            Statement st = con.createStatement();
-            String sql = querie;
-            rs = st.executeUpdate(sql);
+        Statement st = con.createStatement();
+        String sql = querie;
+        rs = st.executeUpdate(sql);
 //            st.
 
 //        JOptionPane.showMessageDialog(null, "");
