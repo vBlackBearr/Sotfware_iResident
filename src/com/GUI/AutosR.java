@@ -8,6 +8,9 @@ package com.GUI;
 import com.conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,13 +23,23 @@ public class AutosR extends javax.swing.JFrame {
     
     ResultSet TableContent;
     
+    altaVehiculo alta;
+    
     /**
      * Creates new form Residentes
      */
     public AutosR() {
         initComponents();
         conn = new Conexion();
+        try {
+            refresh_tabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(AutosR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        alta = new altaVehiculo(this);
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,10 +78,20 @@ public class AutosR extends javax.swing.JFrame {
         jScrollPane1.setViewportView(autos);
 
         agregar.setText("Agregar");
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
+            }
+        });
 
         editar.setText("Editar");
 
         eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,71 +130,96 @@ public class AutosR extends javax.swing.JFrame {
         new MenuResidente().setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        // TODO add your handling code here:
+        alta.setVisible(true);
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        // TODO add your handling code here:
+        int i = autos.getSelectedRow();
+        if (i != -1) {
+            String NO = autos.getValueAt(i, 0).toString();
+            try {
+                conn.DML("DELETE FROM AUTOSRESIDENTES WHERE NO = " + NO);
+            } catch (SQLException ex) {
+                Logger.getLogger(AutosR.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Primero seleccione un registro");
+        }
+        try {
+            refresh_tabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(AutosR.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_eliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AutosR().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(AutosR.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AutosR().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar;
@@ -182,21 +230,21 @@ public class AutosR extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void refresh_tabla() throws SQLException {
-        TableContent = conn.querie("select * from  order by no");
+        TableContent = conn.querie("select * from AutosResidentes order by no");
         DefaultTableModel modelo_tabla = null;
         modelo_tabla = new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Nonbre del dueño", "Matricula del auto", "Seccion a la que pertenece", "Marca del auto"
+                    "No","Nombre del dueño", "Matricula del auto", "Seccion a la que pertenece", "Marca del auto"
                 }
         );
         while (TableContent.next()) {
             String[] row = {TableContent.getString(1), TableContent.getString(2), TableContent.getString(3),
-                TableContent.getString(4)};
+                TableContent.getString(4),TableContent.getString(5)};
             modelo_tabla.addRow(row);
         }
         autos.setModel(modelo_tabla);
-        System.out.println("Docentes Table Refresh Done");
+        System.out.println("AutosR Table Refresh Done");
     }
 
 }

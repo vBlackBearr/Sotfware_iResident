@@ -27,7 +27,7 @@ public class Conexion {
 
     String host = "localhost";
     String port = "3306";
-    String db = "";
+    String db = "iResident";
     String user = "root";
     String pass = "";
     String url = "jdbc:mysql://" + host + ":" + port + "/" + db + "?user=root&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";

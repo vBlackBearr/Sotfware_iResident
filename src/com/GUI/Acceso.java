@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.GUI;
+
 import com.conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Acceso extends javax.swing.JFrame {
 
     Conexion conn;
-    
+
     /**
      * Creates new form Acceso
      */
@@ -120,32 +121,36 @@ public class Acceso extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accederActionPerformed
-        ResultSet pass = conn.querie("select password from usuarios where usuario = '" + txtUsuario.getText() + "'");
+        ResultSet pass = conn.querie("select pass from usuarios where usuario = '" + txtUsuario.getText() + "'");
         try {
-            if(pass.next() && pass.getString(1).equals(txtContraseña.getText())){
+            if (pass.next() && pass.getString(1).equals(txtContraseña.getText())) {
                 JOptionPane.showMessageDialog(null, "ACCESO CONCEDIDO", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                String opc = this.getTitle();
+                switch (opc) {
+                    case "iResident|Residentes":
+                        new MenuResidente().setVisible(true);
+                        bnd = 1;
+                        this.dispose();
+                        break;
+                    case "iResident|Administradores":
+                        new MenuAdmin().setVisible(true);
+                        bnd = 1;
+                        this.dispose();
+                        break;
+                    case "iResident|Visitantes":
+                        new MenuVisitante().setVisible(true);
+                        bnd = 1;
+                        this.dispose();
+                        break;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "USUARIO Y/O CONTRASEÑA INCORRECTA", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(Acceso.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String opc = this.getTitle();
-        switch (opc) {
-            case "iResident|Residentes":
-                new MenuResidente().setVisible(true);
-                bnd = 1;
-                this.dispose();
-                break;
-            case "iResident|Administradores":
-                new MenuAdmin().setVisible(true);
-                bnd = 1;
-                this.dispose();
-                break;
-            case "iResident|Visitantes":
-                new MenuVisitante().setVisible(true);
-                bnd = 1;
-                this.dispose();
-                break;
-        }
+
     }//GEN-LAST:event_accederActionPerformed
 
     /**
